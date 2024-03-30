@@ -3,28 +3,41 @@ defmodule AnkexWeb.DeckLiveTest do
 
   import Phoenix.LiveViewTest
   import Ankex.DecksFixtures
+  import Ankex.AccountsFixtures
 
-  @create_attrs %{name: "some name", public: true, description: "some description"}
-  @update_attrs %{name: "some updated name", public: false, description: "some updated description"}
+  @create_attrs %{name: "new_name", public: true, description: "some description"}
+  @update_attrs %{
+    name: "some updated name",
+    public: false,
+    description: "some updated description"
+  }
   @invalid_attrs %{name: nil, public: false, description: nil}
 
   defp create_deck(_) do
-    deck = deck_fixture()
-    %{deck: deck}
+    user = user_fixture()
+    %{user: user}
   end
 
   describe "Index" do
     setup [:create_deck]
 
-    test "lists all decks", %{conn: conn, deck: deck} do
-      {:ok, _index_live, html} = live(conn, ~p"/decks")
+    test "lists all user decks", %{conn: conn, user: user} do
+      deck = deck_fixture(%{user_id: user.id})
+
+      {:ok, _lv, html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/users/#{deck.user_id}/decks")
 
       assert html =~ "Listing Decks"
       assert html =~ deck.name
     end
 
-    test "saves new deck", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/decks")
+    test "saves new deck", %{conn: conn, user: user} do
+      {:ok, index_live, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/users/#{user.id}/decks")
 
       assert index_live |> element("a", "New Deck") |> render_click() =~
                "New Deck"
@@ -39,15 +52,20 @@ defmodule AnkexWeb.DeckLiveTest do
              |> form("#deck-form", deck: @create_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/decks")
+      assert_patch(index_live, ~p"/users/#{user.id}/decks")
 
       html = render(index_live)
       assert html =~ "Deck created successfully"
-      assert html =~ "some name"
+      assert html =~ "new_name"
     end
 
-    test "updates deck in listing", %{conn: conn, deck: deck} do
-      {:ok, index_live, _html} = live(conn, ~p"/decks")
+    test "updates deck in listing", %{conn: conn, user: user} do
+      deck = deck_fixture(%{user_id: user.id})
+
+      {:ok, index_live, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/users/#{user.id}/decks")
 
       assert index_live |> element("#decks-#{deck.id} a", "Edit") |> render_click() =~
                "Edit Deck"
@@ -62,15 +80,20 @@ defmodule AnkexWeb.DeckLiveTest do
              |> form("#deck-form", deck: @update_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/decks")
+      assert_patch(index_live, ~p"/users/#{user.id}/decks")
 
       html = render(index_live)
       assert html =~ "Deck updated successfully"
       assert html =~ "some updated name"
     end
 
-    test "deletes deck in listing", %{conn: conn, deck: deck} do
-      {:ok, index_live, _html} = live(conn, ~p"/decks")
+    test "deletes deck in listing", %{conn: conn, user: user} do
+      deck = deck_fixture(%{user_id: user.id})
+
+      {:ok, index_live, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/users/#{user.id}/decks")
 
       assert index_live |> element("#decks-#{deck.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#decks-#{deck.id}")
@@ -80,15 +103,25 @@ defmodule AnkexWeb.DeckLiveTest do
   describe "Show" do
     setup [:create_deck]
 
-    test "displays deck", %{conn: conn, deck: deck} do
-      {:ok, _show_live, html} = live(conn, ~p"/decks/#{deck}")
+    test "displays deck", %{conn: conn, user: user} do
+      deck = deck_fixture(%{user_id: user.id})
+
+      {:ok, _show_live, html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/decks/#{deck}")
 
       assert html =~ "Show Deck"
       assert html =~ deck.name
     end
 
-    test "updates deck within modal", %{conn: conn, deck: deck} do
-      {:ok, show_live, _html} = live(conn, ~p"/decks/#{deck}")
+    test "updates deck within modal", %{conn: conn, user: user} do
+      deck = deck_fixture(%{user_id: user.id})
+
+      {:ok, show_live, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/decks/#{deck}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Deck"

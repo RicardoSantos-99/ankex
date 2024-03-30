@@ -5,8 +5,11 @@ defmodule AnkexWeb.DeckLive.Index do
   alias Ankex.Decks.Deck
 
   @impl true
-  def mount(%{"user_id" => user_id}, _session, socket) do
-    {:ok, stream(socket, :decks, Decks.list_decks_by_user(user_id))}
+  def mount(_params, _session, socket) do
+    current_user = socket.assigns.current_user
+    socket = assign(socket, :current_user, current_user)
+
+    {:ok, stream(socket, :decks, Decks.list_decks_by_user(current_user.id))}
   end
 
   @impl true

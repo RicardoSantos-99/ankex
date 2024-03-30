@@ -12,6 +12,6 @@ defmodule Ankex.Repo.Migrations.CreateDecks do
       timestamps(type: :utc_datetime)
     end
 
-    create index(:decks, [:user_id])
+    create unique_index(:decks, [:name, :user_id])
   end
 end

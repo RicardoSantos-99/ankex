@@ -5,6 +5,8 @@ defmodule AnkexWeb.DeckLive.Show do
 
   @impl true
   def mount(_params, _session, socket) do
+    socket = assign(socket, :current_user, socket.assigns.current_user)
+
     {:ok, socket}
   end
 
