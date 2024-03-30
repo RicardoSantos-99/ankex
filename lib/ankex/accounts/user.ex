@@ -1,6 +1,9 @@
 defmodule Ankex.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+
+  alias Ankex.Decks.Deck
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -8,6 +11,8 @@ defmodule Ankex.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+
+    has_many :decks, Deck
 
     timestamps(type: :utc_datetime)
   end
@@ -53,7 +58,7 @@ defmodule Ankex.Accounts.User do
   defp validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
-    |> validate_length(:password, min: 12, max: 72)
+    |> validate_length(:password, min: 8, max: 72)
     # Examples of additional password validation:
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
