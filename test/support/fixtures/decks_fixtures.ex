@@ -27,6 +27,16 @@ defmodule Ankex.DecksFixtures do
     })
   end
 
+  def valid_card_attributes(attrs \\ %{}) do
+    deck = deck_fixture()
+
+    Enum.into(attrs, %{
+      front: "some front",
+      back: "some back",
+      deck_id: deck.id
+    })
+  end
+
   @doc """
   Generate a deck.
   """
@@ -37,5 +47,23 @@ defmodule Ankex.DecksFixtures do
       |> Ankex.Decks.create_deck()
 
     deck
+  end
+
+  @doc """
+  Generate a card.
+  """
+  def card_fixture(attrs \\ %{}) do
+    deck = deck_fixture(attrs)
+
+    {:ok, card} =
+      attrs
+      |> Enum.into(%{
+        back: "some back",
+        front: "some front",
+        deck_id: deck.id
+      })
+      |> Ankex.Decks.create_card()
+
+    card
   end
 end

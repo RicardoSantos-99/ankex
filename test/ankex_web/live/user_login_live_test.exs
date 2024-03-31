@@ -14,11 +14,13 @@ defmodule AnkexWeb.UserLoginLiveTest do
     end
 
     test "redirects if already logged in", %{conn: conn} do
+      user = user_fixture()
+
       result =
         conn
-        |> log_in_user(user_fixture())
+        |> log_in_user(user)
         |> live(~p"/users/log_in")
-        |> follow_redirect(conn, "/")
+        |> follow_redirect(conn, "/users/#{user.id}/decks")
 
       assert {:ok, _conn} = result
     end
@@ -36,7 +38,7 @@ defmodule AnkexWeb.UserLoginLiveTest do
 
       conn = submit_form(form, conn)
 
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/users/log_in"
     end
 
     test "redirects to login page with a flash error if there are no valid credentials", %{

@@ -12,9 +12,11 @@
   <:item title="Name"><%= @deck.name %></:item>
   <:item title="Description"><%= @deck.description %></:item>
   <:item title="Public"><%= @deck.public %></:item>
+  <:item title="Cards"> <.link navigate={~p"/decks/#{@deck.id}/cards"}>Cards</.link></:item>
 </.list>
 
 <.back navigate={~p"/users/#{@current_user.id}/decks"}>Back to decks</.back>
+
 
 <.modal :if={@live_action == :edit} id="deck-modal" show on_cancel={JS.patch(~p"/decks/#{@deck}")}>
   <.live_component

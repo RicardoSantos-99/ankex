@@ -1,0 +1,46 @@
+<.header>
+  Listing Cards
+  <:actions>
+    <.link patch={~p"/cards/new"}>
+      <.button>New Card</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="cards"
+  rows={@streams.cards}
+  row_click={fn {_id, card} -> JS.navigate(~p"/decks/#{@deck_id}/cards/#{card}") end}
+>
+  <:col :let={{_id, card}} label="Front"><%= card.front %></:col>
+  <:col :let={{_id, card}} label="Back"><%= card.back %></:col>
+  <:action :let={{_id, card}}>
+    <div class="sr-only">
+      <.link navigate={~p"/decks/#{@deck_id}/cards/#{card}"}>Show</.link>
+    </div>
+    <.link patch={~p"/decks/#{@deck_id}/cards/#{card}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, card}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: card.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+
+<.back navigate={~p"/decks/#{@deck_id}"}>Back to deck details</.back>
+
+<.modal :if={@live_action in [:new, :edit]} id="card-modal" show on_cancel={JS.patch(~p"/decks/#{@deck_id}/cards")}>
+  <.live_component
+    module={AnkexWeb.CardLive.FormComponent}
+    id={@card.id || :new}
+    title={@page_title}
+    action={@live_action}
+    card={@card}
+    patch={~p"/decks/#{@deck_id}/cards"}
+    deck_id={@deck_id}
+  />
+</.modal>

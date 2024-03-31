@@ -33,19 +33,28 @@ defmodule AnkexWeb.UserConfirmationInstructionsLive do
   end
 
   def handle_event("send_instructions", %{"user" => %{"email" => email}}, socket) do
-    if user = Accounts.get_user_by_email(email) do
+    user = Accounts.get_user_by_email(email)
+
+    if user do
       Accounts.deliver_user_confirmation_instructions(
         user,
         &url(~p"/users/confirm/#{&1}")
       )
+
+      info =
+        "If your email is in our system and it has not been confirmed yet, you will receive an email with instructions shortly."
+
+      {:noreply,
+       socket
+       |> put_flash(:info, info)
+       |> redirect(to: ~p"/users/#{user.id}/decks")}
+    else
+      info = "Invalid email address, please try again."
+
+      {:noreply,
+       socket
+       |> put_flash(:error, info)
+       |> redirect(to: ~p"/users/confirm")}
     end
-
-    info =
-      "If your email is in our system and it has not been confirmed yet, you will receive an email with instructions shortly."
-
-    {:noreply,
-     socket
-     |> put_flash(:info, info)
-     |> redirect(to: ~p"/")}
   end
 end

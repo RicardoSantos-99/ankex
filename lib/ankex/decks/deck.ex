@@ -3,6 +3,7 @@ defmodule Ankex.Decks.Deck do
   import Ecto.Changeset
 
   alias Ankex.Accounts.User
+  alias Ankex.Decks.Card
 
   @params ~W(name public description user_id)a
 
@@ -12,7 +13,9 @@ defmodule Ankex.Decks.Deck do
     field :name, :string
     field :public, :boolean, default: false
     field :description, :string
+
     belongs_to :user, User
+    has_many :cards, Card
 
     timestamps(type: :utc_datetime)
   end

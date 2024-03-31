@@ -53,6 +53,13 @@ defmodule AnkexWeb.Router do
 
       live "/decks/:id", DeckLive.Show, :show
       live "/decks/:id/show/edit", DeckLive.Show, :edit
+
+      live "/decks/:deck_id/cards", CardLive.Index, :index
+      live "/cards/new", CardLive.Index, :new
+      live "/decks/:deck_id/cards/:id/edit", CardLive.Index, :edit
+
+      live "/decks/:deck_id/cards/:id", CardLive.Show, :show
+      live "/cards/:id/show/edit", CardLive.Show, :edit
     end
   end
 
