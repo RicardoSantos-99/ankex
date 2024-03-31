@@ -1,8 +1,12 @@
 defmodule AnkexWeb.UserSettingsLive do
+  @moduledoc """
+  Live component for user account settings.
+  """
   use AnkexWeb, :live_view
 
   alias Ankex.Accounts
 
+  @doc false
   def render(assigns) do
     ~H"""
     <.header class="text-center">
@@ -73,6 +77,7 @@ defmodule AnkexWeb.UserSettingsLive do
     """
   end
 
+  @doc false
   def mount(%{"token" => token}, _session, socket) do
     socket =
       case Accounts.update_user_email(socket.assigns.current_user, token) do
@@ -86,6 +91,7 @@ defmodule AnkexWeb.UserSettingsLive do
     {:ok, push_navigate(socket, to: ~p"/users/settings")}
   end
 
+  @doc false
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
     email_changeset = Accounts.change_user_email(user)
@@ -103,6 +109,7 @@ defmodule AnkexWeb.UserSettingsLive do
     {:ok, socket}
   end
 
+  @doc false
   def handle_event("validate_email", params, socket) do
     %{"current_password" => password, "user" => user_params} = params
 
@@ -115,6 +122,7 @@ defmodule AnkexWeb.UserSettingsLive do
     {:noreply, assign(socket, email_form: email_form, email_form_current_password: password)}
   end
 
+  @doc false
   def handle_event("update_email", params, socket) do
     %{"current_password" => password, "user" => user_params} = params
     user = socket.assigns.current_user
@@ -135,6 +143,7 @@ defmodule AnkexWeb.UserSettingsLive do
     end
   end
 
+  @doc false
   def handle_event("validate_password", params, socket) do
     %{"current_password" => password, "user" => user_params} = params
 
@@ -147,6 +156,7 @@ defmodule AnkexWeb.UserSettingsLive do
     {:noreply, assign(socket, password_form: password_form, current_password: password)}
   end
 
+  @doc false
   def handle_event("update_password", params, socket) do
     %{"current_password" => password, "user" => user_params} = params
     user = socket.assigns.current_user

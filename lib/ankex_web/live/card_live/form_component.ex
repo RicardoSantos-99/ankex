@@ -1,9 +1,11 @@
 defmodule AnkexWeb.CardLive.FormComponent do
+  @moduledoc false
   use AnkexWeb, :live_component
 
   alias Ankex.Decks
 
   @impl true
+  @doc false
   def render(assigns) do
     ~H"""
     <div>
@@ -30,6 +32,7 @@ defmodule AnkexWeb.CardLive.FormComponent do
   end
 
   @impl true
+  @doc false
   def update(%{card: card} = assigns, socket) do
     changeset = Decks.change_card(card)
 
@@ -40,6 +43,7 @@ defmodule AnkexWeb.CardLive.FormComponent do
   end
 
   @impl true
+  @doc false
   def handle_event("validate", %{"card" => card_params}, socket) do
     changeset =
       socket.assigns.card
@@ -49,6 +53,7 @@ defmodule AnkexWeb.CardLive.FormComponent do
     {:noreply, assign_form(socket, changeset)}
   end
 
+  @doc false
   def handle_event("save", %{"card" => card_params}, socket) do
     save_card(socket, socket.assigns.action, card_params)
   end

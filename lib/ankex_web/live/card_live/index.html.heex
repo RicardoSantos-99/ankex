@@ -30,10 +30,14 @@
   </:action>
 </.table>
 
-
 <.back navigate={~p"/decks/#{@deck_id}"}>Back to deck details</.back>
 
-<.modal :if={@live_action in [:new, :edit]} id="card-modal" show on_cancel={JS.patch(~p"/decks/#{@deck_id}/cards")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="card-modal"
+  show
+  on_cancel={JS.patch(~p"/decks/#{@deck_id}/cards")}
+>
   <.live_component
     module={AnkexWeb.CardLive.FormComponent}
     id={@card.id || :new}

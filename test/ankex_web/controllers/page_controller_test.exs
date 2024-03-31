@@ -1,5 +1,5 @@
 defmodule AnkexWeb.PageControllerTest do
-  use AnkexWeb.ConnCase
+  use AnkexWeb.ConnCase, async: true
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

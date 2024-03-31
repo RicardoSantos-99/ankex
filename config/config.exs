@@ -13,6 +13,7 @@ config :ankex,
 
 # Configures the endpoint
 config :ankex, AnkexWeb.Endpoint,
+  force_ssl: [hsts: true],
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [

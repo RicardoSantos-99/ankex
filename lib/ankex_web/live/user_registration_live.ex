@@ -1,9 +1,11 @@
 defmodule AnkexWeb.UserRegistrationLive do
+  @moduledoc false
   use AnkexWeb, :live_view
 
   alias Ankex.Accounts
   alias Ankex.Accounts.User
 
+  @doc false
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -42,6 +44,7 @@ defmodule AnkexWeb.UserRegistrationLive do
     """
   end
 
+  @doc false
   def mount(_params, _session, socket) do
     changeset = Accounts.change_user_registration(%User{})
 
@@ -53,6 +56,7 @@ defmodule AnkexWeb.UserRegistrationLive do
     {:ok, socket, temporary_assigns: [form: nil]}
   end
 
+  @doc false
   def handle_event("save", %{"user" => user_params}, socket) do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
@@ -70,6 +74,7 @@ defmodule AnkexWeb.UserRegistrationLive do
     end
   end
 
+  @doc false
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset = Accounts.change_user_registration(%User{}, user_params)
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}

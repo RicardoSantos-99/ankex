@@ -1,10 +1,11 @@
 defmodule Ankex.AccountsTest do
-  use Ankex.DataCase
+  use Ankex.DataCase, async: true
 
   alias Ankex.Accounts
 
   import Ankex.AccountsFixtures
-  alias Ankex.Accounts.{User, UserToken}
+  alias Ankex.Accounts.User
+  alias Ankex.Accounts.UserToken
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
@@ -86,7 +87,7 @@ defmodule Ankex.AccountsTest do
 
     test "registers users with a hashed password" do
       email = unique_user_email()
-      {:ok, user} = Accounts.register_user(valid_user_attributes(email: email))
+      {:ok, user} = [email: email] |> valid_user_attributes() |> Accounts.register_user()
       assert user.email == email
       assert is_binary(user.hashed_password)
       assert is_nil(user.confirmed_at)

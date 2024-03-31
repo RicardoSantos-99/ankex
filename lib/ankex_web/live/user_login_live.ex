@@ -1,6 +1,8 @@
 defmodule AnkexWeb.UserLoginLive do
+  @moduledoc false
   use AnkexWeb, :live_view
 
+  @doc false
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -35,6 +37,7 @@ defmodule AnkexWeb.UserLoginLive do
     """
   end
 
+  @doc false
   def mount(_params, _session, socket) do
     email = live_flash(socket.assigns.flash, :email)
     form = to_form(%{"email" => email}, as: "user")

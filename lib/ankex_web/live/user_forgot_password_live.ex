@@ -1,8 +1,10 @@
 defmodule AnkexWeb.UserForgotPasswordLive do
+  @moduledoc false
   use AnkexWeb, :live_view
 
   alias Ankex.Accounts
 
+  @doc false
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -27,10 +29,12 @@ defmodule AnkexWeb.UserForgotPasswordLive do
     """
   end
 
+  @doc false
   def mount(_params, _session, socket) do
     {:ok, assign(socket, form: to_form(%{}, as: "user"))}
   end
 
+  @doc false
   def handle_event("send_email", %{"user" => %{"email" => email}}, socket) do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_user_reset_password_instructions(

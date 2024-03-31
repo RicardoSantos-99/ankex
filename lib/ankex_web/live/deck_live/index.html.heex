@@ -31,7 +31,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="deck-modal" show on_cancel={JS.patch(~p"/users/#{@current_user.id}/decks")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="deck-modal"
+  show
+  on_cancel={JS.patch(~p"/users/#{@current_user.id}/decks")}
+>
   <.live_component
     module={AnkexWeb.DeckLive.FormComponent}
     id={@deck.id || :new}

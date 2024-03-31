@@ -1,8 +1,10 @@
 defmodule AnkexWeb.UserConfirmationLive do
+  @moduledoc false
   use AnkexWeb, :live_view
 
   alias Ankex.Accounts
 
+  @doc false
   def render(%{live_action: :edit} = assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -23,6 +25,7 @@ defmodule AnkexWeb.UserConfirmationLive do
     """
   end
 
+  @doc false
   def mount(%{"token" => token}, _session, socket) do
     form = to_form(%{"token" => token}, as: "user")
     {:ok, assign(socket, form: form), temporary_assigns: [form: nil]}
@@ -30,6 +33,7 @@ defmodule AnkexWeb.UserConfirmationLive do
 
   # Do not log in the user after confirmation to avoid a
   # leaked token giving the user access to the account.
+  @doc false
   def handle_event("confirm_account", %{"user" => %{"token" => token}}, socket) do
     case Accounts.confirm_user(token) do
       {:ok, _} ->

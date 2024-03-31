@@ -1,5 +1,5 @@
 defmodule Ankex.DecksTest do
-  use Ankex.DataCase
+  use Ankex.DataCase, async: true
 
   import Ankex.DecksFixtures
   import Ankex.DecksFixtures

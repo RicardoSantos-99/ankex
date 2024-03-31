@@ -1,14 +1,19 @@
 defmodule AnkexWeb.CardLive.Show do
+  @moduledoc """
+  The live view for showing a card.
+  """
   use AnkexWeb, :live_view
 
   alias Ankex.Decks
 
   @impl true
+  @doc false
   def mount(%{"deck_id" => deck_id}, _session, socket) do
-    {:ok, socket |> assign(:deck_id, deck_id)}
+    {:ok, assign(socket, :deck_id, deck_id)}
   end
 
   @impl true
+  @doc false
   def handle_params(%{"id" => id}, _, socket) do
     {:noreply,
      socket

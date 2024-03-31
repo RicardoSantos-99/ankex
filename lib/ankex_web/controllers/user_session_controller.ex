@@ -1,9 +1,13 @@
 defmodule AnkexWeb.UserSessionController do
+  @moduledoc """
+  The user session controller.
+  """
   use AnkexWeb, :controller
 
   alias Ankex.Accounts
   alias AnkexWeb.UserAuth
 
+  @doc false
   def create(conn, %{"_action" => "registered"} = params) do
     create(conn, params, "Account created successfully!")
   end
@@ -34,6 +38,7 @@ defmodule AnkexWeb.UserSessionController do
     end
   end
 
+  @doc false
   def delete(conn, _params) do
     conn
     |> put_flash(:info, "Logged out successfully.")

@@ -1,9 +1,14 @@
 defmodule Ankex.Decks.Card do
+  @moduledoc """
+  The `Ankex.Decks.Card` schema and changesets.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
   alias Ankex.Decks.Deck
+  alias Ecto.Changeset
 
+  @type t :: %__MODULE__{}
   @params ~W(front back deck_id)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -17,7 +22,10 @@ defmodule Ankex.Decks.Card do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
+  @doc """
+  A card changeset for creation and updates.
+  """
+  @spec changeset(map(), map()) :: Changeset.t()
   def changeset(card, attrs) do
     card
     |> cast(attrs, @params)

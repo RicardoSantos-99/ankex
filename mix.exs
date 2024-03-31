@@ -9,7 +9,17 @@ defmodule Ankex.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "Ankex",
+      source_url: "https://github.com/RicardoSantos-99/Ankex",
+      homepage_url: "https://github.com/RicardoSantos-99/Ankex",
+      docs: [
+        # The main page in the docs
+        main: "Ankex",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -58,7 +68,16 @@ defmodule Ankex.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.2"}
+      {:bandit, "~> 1.2"},
+      {:ex_check, "~> 0.14.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:doctor, "~> 0.21.0", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+      {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
+      {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
+      {:makeup_elixir, "~> 0.16.2", only: :dev, runtime: false},
+      {:typed_struct, "~> 0.3.0", runtime: false}
     ]
   end
 

@@ -31,7 +31,9 @@ defmodule Ankex.Decks do
 
   """
   def list_decks_by_user(user_id) do
-    Repo.all(from d in Deck, where: d.user_id == ^user_id)
+    Deck
+    |> where([d], d.user_id == ^user_id)
+    |> Repo.all()
   end
 
   @doc """
@@ -127,7 +129,9 @@ defmodule Ankex.Decks do
 
   """
   def list_cards(deck_id) do
-    Repo.all(from c in Card, where: c.deck_id == ^deck_id)
+    Card
+    |> where([c], c.deck_id == ^deck_id)
+    |> Repo.all()
   end
 
   @doc """

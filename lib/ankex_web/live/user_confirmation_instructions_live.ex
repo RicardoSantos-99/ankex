@@ -1,8 +1,10 @@
 defmodule AnkexWeb.UserConfirmationInstructionsLive do
+  @moduledoc false
   use AnkexWeb, :live_view
 
   alias Ankex.Accounts
 
+  @doc false
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -28,10 +30,12 @@ defmodule AnkexWeb.UserConfirmationInstructionsLive do
     """
   end
 
+  @doc false
   def mount(_params, _session, socket) do
     {:ok, assign(socket, form: to_form(%{}, as: "user"))}
   end
 
+  @doc false
   def handle_event("send_instructions", %{"user" => %{"email" => email}}, socket) do
     user = Accounts.get_user_by_email(email)
 

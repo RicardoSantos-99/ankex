@@ -6,7 +6,9 @@ defmodule Ankex.Accounts do
   import Ecto.Query, warn: false
   alias Ankex.Repo
 
-  alias Ankex.Accounts.{User, UserToken, UserNotifier}
+  alias Ankex.Accounts.User
+  alias Ankex.Accounts.UserToken
+  alias Ankex.Accounts.UserNotifier
 
   ## Database getters
 
@@ -139,7 +141,7 @@ defmodule Ankex.Accounts do
 
     with {:ok, query} <- UserToken.verify_change_email_token_query(token, context),
          %UserToken{sent_to: email} <- Repo.one(query),
-         {:ok, _} <- Repo.transaction(user_email_multi(user, email, context)) do
+         {:ok, _} <- user |> user_email_multi(email, context) |> Repo.transaction() do
       :ok
     else
       _ -> :error
@@ -238,7 +240,10 @@ defmodule Ankex.Accounts do
   Deletes the signed token with the given context.
   """
   def delete_user_session_token(token) do
-    Repo.delete_all(UserToken.by_token_and_context_query(token, "session"))
+    token
+    |> UserToken.by_token_and_context_query("session")
+    |> Repo.delete_all()
+
     :ok
   end
 
@@ -276,7 +281,7 @@ defmodule Ankex.Accounts do
   def confirm_user(token) do
     with {:ok, query} <- UserToken.verify_email_token_query(token, "confirm"),
          %User{} = user <- Repo.one(query),
-         {:ok, %{user: user}} <- Repo.transaction(confirm_user_multi(user)) do
+         {:ok, %{user: user}} <- user |> confirm_user_multi() |> Repo.transaction() do
       {:ok, user}
     else
       _ -> :error

@@ -1,10 +1,12 @@
 defmodule AnkexWeb.DeckLive.Index do
+  @moduledoc false
   use AnkexWeb, :live_view
 
   alias Ankex.Decks
   alias Ankex.Decks.Deck
 
   @impl true
+  @doc false
   def mount(_params, _session, socket) do
     current_user = socket.assigns.current_user
     socket = assign(socket, :current_user, current_user)
@@ -13,6 +15,7 @@ defmodule AnkexWeb.DeckLive.Index do
   end
 
   @impl true
+  @doc false
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end

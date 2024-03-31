@@ -1,8 +1,10 @@
 defmodule AnkexWeb.UserResetPasswordLive do
+  @moduledoc false
   use AnkexWeb, :live_view
 
   alias Ankex.Accounts
 
+  @doc false
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -38,6 +40,7 @@ defmodule AnkexWeb.UserResetPasswordLive do
     """
   end
 
+  @doc false
   def mount(params, _session, socket) do
     socket = assign_user_and_token(socket, params)
 
@@ -55,6 +58,7 @@ defmodule AnkexWeb.UserResetPasswordLive do
 
   # Do not log in the user after reset password to avoid a
   # leaked token giving the user access to the account.
+  @doc false
   def handle_event("reset_password", %{"user" => user_params}, socket) do
     case Accounts.reset_user_password(socket.assigns.user, user_params) do
       {:ok, _} ->
@@ -68,6 +72,7 @@ defmodule AnkexWeb.UserResetPasswordLive do
     end
   end
 
+  @doc false
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset = Accounts.change_user_password(socket.assigns.user, user_params)
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}

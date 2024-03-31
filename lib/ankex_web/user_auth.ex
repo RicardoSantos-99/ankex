@@ -1,4 +1,10 @@
 defmodule AnkexWeb.UserAuth do
+  @moduledoc """
+  This module provides functions to log in and log out users,
+
+  It also provides functions to authenticate users and
+  mount the current user in LiveViews.
+  """
   use AnkexWeb, :verified_routes
 
   import Plug.Conn

@@ -1,4 +1,5 @@
 defmodule AnkexWeb.Telemetry do
+  @moduledoc false
   use Supervisor
   import Telemetry.Metrics
 
@@ -19,6 +20,7 @@ defmodule AnkexWeb.Telemetry do
     Supervisor.init(children, strategy: :one_for_one)
   end
 
+  @doc false
   def metrics do
     [
       # Phoenix Metrics

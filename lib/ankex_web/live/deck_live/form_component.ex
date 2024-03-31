@@ -1,9 +1,11 @@
 defmodule AnkexWeb.DeckLive.FormComponent do
+  @moduledoc false
   use AnkexWeb, :live_component
 
   alias Ankex.Decks
 
   @impl true
+  @doc false
   def render(assigns) do
     ~H"""
     <div>
@@ -31,6 +33,7 @@ defmodule AnkexWeb.DeckLive.FormComponent do
   end
 
   @impl true
+  @doc false
   def update(%{deck: deck} = assigns, socket) do
     changeset = Decks.change_deck(deck)
 
@@ -41,6 +44,7 @@ defmodule AnkexWeb.DeckLive.FormComponent do
   end
 
   @impl true
+  @doc false
   def handle_event("validate", %{"deck" => deck_params}, socket) do
     changeset =
       socket.assigns.deck
@@ -50,6 +54,7 @@ defmodule AnkexWeb.DeckLive.FormComponent do
     {:noreply, assign_form(socket, changeset)}
   end
 
+  @doc false
   def handle_event("save", %{"deck" => deck_params}, socket) do
     save_deck(socket, socket.assigns.action, deck_params)
   end

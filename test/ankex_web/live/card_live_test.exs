@@ -1,5 +1,5 @@
 defmodule AnkexWeb.CardLiveTest do
-  use AnkexWeb.ConnCase
+  use AnkexWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
   import Ankex.DecksFixtures

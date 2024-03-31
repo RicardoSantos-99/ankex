@@ -1,4 +1,7 @@
 defmodule Ankex.Accounts.UserNotifier do
+  @moduledoc """
+  This module provides functions to deliver emails to users.
+  """
   import Swoosh.Email
 
   alias Ankex.Mailer

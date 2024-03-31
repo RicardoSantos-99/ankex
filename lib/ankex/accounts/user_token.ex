@@ -1,8 +1,12 @@
 defmodule Ankex.Accounts.UserToken do
+  @moduledoc """
+  This module provides functions to generate and verify tokens.
+  """
   use Ecto.Schema
   import Ecto.Query
   alias Ankex.Accounts.UserToken
 
+  @type t :: %__MODULE__{}
   @hash_algorithm :sha256
   @rand_size 32
 
