@@ -24,7 +24,7 @@ defmodule AnkexWeb.CardLive.FormComponent do
         <.input field={@form[:front]} type="text" label="Front" />
         <.input field={@form[:back]} type="text" label="Back" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Card</.button>
+          <.core_button phx-disable-with="Saving...">Save Card</.core_button>
         </:actions>
       </.simple_form>
     </div>

@@ -7,7 +7,7 @@
   </:actions>
 </.header>
 
-<.table
+<.core_table
   id="decks"
   rows={@streams.decks}
   row_click={fn {_id, deck} -> JS.navigate(~p"/decks/#{deck}") end}
@@ -29,9 +29,9 @@
       Delete
     </.link>
   </:action>
-</.table>
+</.core_table>
 
-<.modal
+<.core_modal
   :if={@live_action in [:new, :edit]}
   id="deck-modal"
   show
@@ -46,4 +46,4 @@
     patch={~p"/users/#{@current_user.id}/decks"}
     user={@current_user}
   />
-</.modal>
+</.core_modal>

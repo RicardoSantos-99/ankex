@@ -24,16 +24,16 @@ defmodule AnkexWeb.CoreComponents do
 
   ## Examples
 
-      <.modal id="confirm-modal">
+      <.core_modal id="confirm-modal">
         This is a modal.
-      </.modal>
+      </.core_modal>
 
   JS commands may be passed to the `:on_cancel` to configure
   the closing/cancel event, for example:
 
-      <.modal id="confirm" on_cancel={JS.navigate(~p"/posts")}>
+      <.core_modal id="confirm" on_cancel={JS.navigate(~p"/posts")}>
         This is another modal.
-      </.modal>
+      </.core_modal>
 
   """
   attr :id, :string, required: true
@@ -41,7 +41,7 @@ defmodule AnkexWeb.CoreComponents do
   attr :on_cancel, JS, default: %JS{}
   slot :inner_block, required: true
 
-  def modal(assigns) do
+  def core_modal(assigns) do
     ~H"""
     <div
       id={@id}
@@ -182,10 +182,10 @@ defmodule AnkexWeb.CoreComponents do
   ## Examples
 
       <.simple_form for={@form} phx-change="validate" phx-submit="save">
-        <.input field={@form[:email]} label="Email"/>
-        <.input field={@form[:username]} label="Username" />
+        <.core_input field={@form[:email]} label="Email"/>
+        <.core_input field={@form[:username]} label="Username" />
         <:actions>
-          <.button>Save</.button>
+          <.core_button>Save</.core_button>
         </:actions>
       </.simple_form>
   """
@@ -217,8 +217,8 @@ defmodule AnkexWeb.CoreComponents do
 
   ## Examples
 
-      <.button>Send!</.button>
-      <.button phx-click="go" class="ml-2">Send!</.button>
+      <.core_button>Send!</.core_button>
+      <.core_button phx-click="go" class="ml-2">Send!</.core_button>
   """
   attr :type, :string, default: nil
   attr :class, :string, default: nil
@@ -226,7 +226,7 @@ defmodule AnkexWeb.CoreComponents do
 
   slot :inner_block, required: true
 
-  def button(assigns) do
+  def core_button(assigns) do
     ~H"""
     <button
       type={@type}
@@ -264,8 +264,8 @@ defmodule AnkexWeb.CoreComponents do
 
   ## Examples
 
-      <.input field={@form[:email]} type="email" />
-      <.input name="my-input" errors={["oh no!"]} />
+      <.core_input field={@form[:email]} type="email" />
+      <.core_input name="my-input" errors={["oh no!"]} />
   """
   attr :id, :any, default: nil
   attr :name, :any
@@ -292,16 +292,16 @@ defmodule AnkexWeb.CoreComponents do
 
   slot :inner_block
 
-  def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+  def core_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
     assigns
     |> assign(field: nil, id: assigns.id || field.id)
     |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
     |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
     |> assign_new(:value, fn -> field.value end)
-    |> input()
+    |> core_input()
   end
 
-  def input(%{type: "checkbox"} = assigns) do
+  def core_input(%{type: "checkbox"} = assigns) do
     assigns =
       assign_new(assigns, :checked, fn ->
         Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
@@ -327,7 +327,7 @@ defmodule AnkexWeb.CoreComponents do
     """
   end
 
-  def input(%{type: "select"} = assigns) do
+  def core_input(%{type: "select"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
@@ -346,7 +346,7 @@ defmodule AnkexWeb.CoreComponents do
     """
   end
 
-  def input(%{type: "textarea"} = assigns) do
+  def core_input(%{type: "textarea"} = assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
@@ -367,7 +367,7 @@ defmodule AnkexWeb.CoreComponents do
   end
 
   # All other inputs text, datetime-local, url, password, etc. are handled here...
-  def input(assigns) do
+  def core_input(assigns) do
     ~H"""
     <div phx-feedback-for={@name}>
       <.label for={@id}><%= @label %></.label>
@@ -447,10 +447,10 @@ defmodule AnkexWeb.CoreComponents do
 
   ## Examples
 
-      <.table id="users" rows={@users}>
+      <.core_table id="users" rows={@users}>
         <:col :let={user} label="id"><%= user.id %></:col>
         <:col :let={user} label="username"><%= user.username %></:col>
-      </.table>
+      </.core_table>
   """
   attr :id, :string, required: true
   attr :rows, :list, required: true
@@ -467,7 +467,7 @@ defmodule AnkexWeb.CoreComponents do
 
   slot :action, doc: "the slot for showing user actions in the last table column"
 
-  def table(assigns) do
+  def core_table(assigns) do
     assigns =
       with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
         assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)

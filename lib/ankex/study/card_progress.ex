@@ -17,7 +17,7 @@ defmodule Ankex.Study.CardProgress do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "study_sessions" do
+  schema "card_progresses" do
     field :status, :string
     field :next_interval, :integer
     field :review_date, :naive_datetime

@@ -3,7 +3,7 @@
   <:subtitle>This is a card record from your database.</:subtitle>
   <:actions>
     <.link patch={~p"/cards/#{@card}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit card</.button>
+      <.core_button>Edit card</.core_button>
     </.link>
   </:actions>
 </.header>
@@ -15,7 +15,7 @@
 
 <.back navigate={~p"/decks/#{@deck_id}/cards"}>Back to cards</.back>
 
-<.modal
+<.core_modal
   :if={@live_action == :edit}
   id="card-modal"
   show
@@ -29,4 +29,4 @@
     card={@card}
     patch={~p"/decks/#{@deck_id}/cards/#{@card}"}
   />
-</.modal>
+</.core_modal>

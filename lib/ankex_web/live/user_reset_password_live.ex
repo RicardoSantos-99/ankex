@@ -20,15 +20,15 @@ defmodule AnkexWeb.UserResetPasswordLive do
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:password]} type="password" label="New password" required />
-        <.input
+        <.core_input field={@form[:password]} type="password" label="New password" required />
+        <.core_input
           field={@form[:password_confirmation]}
           type="password"
           label="Confirm new password"
           required
         />
         <:actions>
-          <.button phx-disable-with="Resetting..." class="w-full">Reset Password</.button>
+          <.core_button phx-disable-with="Resetting..." class="w-full">Reset Password</.core_button>
         </:actions>
       </.simple_form>
 

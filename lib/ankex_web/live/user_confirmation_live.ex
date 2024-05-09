@@ -11,9 +11,11 @@ defmodule AnkexWeb.UserConfirmationLive do
       <.header class="text-center">Confirm Account</.header>
 
       <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
-        <.input field={@form[:token]} type="hidden" />
+        <.core_input field={@form[:token]} type="hidden" />
         <:actions>
-          <.button phx-disable-with="Confirming..." class="w-full">Confirm my account</.button>
+          <.core_button phx-disable-with="Confirming..." class="w-full">
+            Confirm my account
+          </.core_button>
         </:actions>
       </.simple_form>
 

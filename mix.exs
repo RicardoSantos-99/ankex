@@ -54,13 +54,6 @@ defmodule Ankex.MixProject do
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
-      {:heroicons,
-       github: "tailwindlabs/heroicons",
-       tag: "v2.1.1",
-       sparse: "optimized",
-       app: false,
-       compile: false,
-       depth: 1},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 0.6"},
@@ -77,7 +70,8 @@ defmodule Ankex.MixProject do
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: false},
       {:mix_audit, "~> 2.1", only: [:dev, :test], runtime: false},
       {:makeup_elixir, "~> 0.16.2", only: :dev, runtime: false},
-      {:typed_struct, "~> 0.3.0", runtime: false}
+      {:typed_struct, "~> 0.3.0", runtime: false},
+      {:petal_components, "~> 1.0"}
     ]
   end
 

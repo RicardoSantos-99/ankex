@@ -2,12 +2,12 @@
   Listing Cards
   <:actions>
     <.link patch={~p"/cards/new"}>
-      <.button>New Card</.button>
+      <.core_button>New Card</.core_button>
     </.link>
   </:actions>
 </.header>
 
-<.table
+<.core_table
   id="cards"
   rows={@streams.cards}
   row_click={fn {_id, card} -> JS.navigate(~p"/decks/#{@deck_id}/cards/#{card}") end}
@@ -28,11 +28,11 @@
       Delete
     </.link>
   </:action>
-</.table>
+</.core_table>
 
 <.back navigate={~p"/decks/#{@deck_id}"}>Back to deck details</.back>
 
-<.modal
+<.core_modal
   :if={@live_action in [:new, :edit]}
   id="card-modal"
   show
@@ -47,4 +47,4 @@
     patch={~p"/decks/#{@deck_id}/cards"}
     deck_id={@deck_id}
   />
-</.modal>
+</.core_modal>
