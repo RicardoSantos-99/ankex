@@ -23,7 +23,7 @@ defmodule AnkexWeb.DeckLive.FormComponent do
       >
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:description]} type="text" label="Description" />
-        <.input field={@form[:public]} type="checkbox" label="Public" />
+        <.field field={@form[:public]} type="checkbox" label="Public" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Deck</.button>
         </:actions>

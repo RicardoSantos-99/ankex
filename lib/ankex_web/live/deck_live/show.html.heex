@@ -1,6 +1,13 @@
 <.header>
-  Deck <%= @deck.id %>
-  <:subtitle>This is a deck record from your database.</:subtitle>
+  <div class="flex items-center gap-2">
+    <%= String.capitalize(@deck.name) %>
+
+    <%= if @deck.public do %>
+      <img src={~p"/images/open-lock.svg"} width="16" />
+    <% else %>
+      <img src={~p"/images/closed-lock.svg"} width="16" />
+    <% end %>
+  </div>
   <:actions>
     <.link patch={~p"/decks/#{@deck}/show/edit"} phx-click={JS.push_focus()}>
       <.button>Edit deck</.button>
@@ -8,14 +15,24 @@
   </:actions>
 </.header>
 
-<.list>
-  <:item title="Name"><%= @deck.name %></:item>
-  <:item title="Description"><%= @deck.description %></:item>
-  <:item title="Public"><%= @deck.public %></:item>
-  <:item title="Cards"><.link navigate={~p"/decks/#{@deck.id}/cards"}>Cards</.link></:item>
-</.list>
+<.table
+  id="cards"
+  row_click={fn {_id, card} -> JS.navigate(~p"/decks/#{@deck.id}/cards/#{card.id}") end}
+  rows={@streams.cards}
+  class="mt-3"
+>
+  <:col :let={{_id, card}} label="Front"><%= String.capitalize(card.front) %></:col>
+  <:col :let={{_id, card}} label="Back"><%= String.capitalize(card.back) %></:col>
+</.table>
 
-<.back navigate={~p"/users/#{@current_user.id}/decks"}>Back to decks</.back>
+<div class="flex justify-between items-center h-12 mt-3">
+  <.link navigate={~p"/users/#{@current_user.id}/decks"}>
+    <.button>Back to Decks</.button>
+  </.link>
+  <.link patch={~p"/cards/new"}>
+    <.button>New Card</.button>
+  </.link>
+</div>
 
 <.core_modal
   :if={@live_action == :edit}

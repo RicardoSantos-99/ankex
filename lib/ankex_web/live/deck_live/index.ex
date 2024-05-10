@@ -4,6 +4,7 @@ defmodule AnkexWeb.DeckLive.Index do
 
   alias Ankex.Decks
   alias Ankex.Decks.Deck
+  alias Ankex.Decks.Card
 
   @impl true
   @doc false
@@ -30,6 +31,12 @@ defmodule AnkexWeb.DeckLive.Index do
     socket
     |> assign(:page_title, "New Deck")
     |> assign(:deck, %Deck{})
+  end
+
+  defp apply_action(socket, :new, _params) do
+    socket
+    |> assign(:page_title, "New Card")
+    |> assign(:card, %Card{})
   end
 
   defp apply_action(socket, :index, _params) do
